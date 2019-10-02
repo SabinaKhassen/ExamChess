@@ -1,0 +1,34 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 14
+VisualStudioVersion = 14.0.25420.1
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ExamChess", "ExamChess\ExamChess.csproj", "{469062D9-5F13-41D0-9F9B-90B728134B75}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DataLayer", "DataLayer\DataLayer.csproj", "{7FBB2019-547B-4340-922B-01B20D5F7920}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BussinessLayer", "BussinessLayer\BussinessLayer.csproj", "{A9E90B90-A2CB-4662-A2D7-0FB299B55B5C}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{469062D9-5F13-41D0-9F9B-90B728134B75}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{469062D9-5F13-41D0-9F9B-90B728134B75}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{469062D9-5F13-41D0-9F9B-90B728134B75}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{469062D9-5F13-41D0-9F9B-90B728134B75}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7FBB2019-547B-4340-922B-01B20D5F7920}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7FBB2019-547B-4340-922B-01B20D5F7920}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7FBB2019-547B-4340-922B-01B20D5F7920}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7FBB2019-547B-4340-922B-01B20D5F7920}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A9E90B90-A2CB-4662-A2D7-0FB299B55B5C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A9E90B90-A2CB-4662-A2D7-0FB299B55B5C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A9E90B90-A2CB-4662-A2D7-0FB299B55B5C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A9E90B90-A2CB-4662-A2D7-0FB299B55B5C}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal
