@@ -19,6 +19,8 @@ namespace BussinessLayer.BussinessObjects
         public int PlayerTwo { get; set; }
         public int ColorId { get; set; }
         public int ChessTypeId { get; set; }
+        public DateTime BeginGame { get; set; }
+        public DateTime EndGame { get; set; }
 
         public GameBO(IMapper mapper, UnitOfWorkFactory<Games> unitOfWorkFactory, IUnityContainer unityContainer)
             : base(mapper, unitOfWorkFactory)
@@ -26,26 +28,41 @@ namespace BussinessLayer.BussinessObjects
             this.unityContainer = unityContainer;
         }
 
-        public GameBO GetAuthorsListById(int? id)
+        public GameBO GetGamesListById(int? id)
         {
             GameBO games;
 
             using (var unitOfWork = unitOfWorkFactory.Create())
             {
-                games = unitOfWork.EntityRepository.GetAll().Where(a => a.Id == id).Select(item => AutoMapper<Games, GameBO>.Map(item)).FirstOrDefault();
+                games = unitOfWork.EntityRepository.GetAll().Where(a => a.Id == id).Select(item => mapper.Map<GameBO>(item)).FirstOrDefault();
             }
             return games;
         }
 
-        public List<GameBO> GetAuthorsList()
+        public List<GameBO> GetGamesList()
         {
             List<GameBO> games = new List<GameBO>();
 
             using (var unitOfWork = unitOfWorkFactory.Create())
             {
-                games = unitOfWork.EntityRepository.GetAll().Select(item => AutoMapper<Games, GameBO>.Map(item)).ToList();
+                games = unitOfWork.EntityRepository.GetAll().Select(item => mapper.Map<GameBO>(item)).ToList();
             }
             return games;
+        }
+
+        public void Save()
+        {
+            using (var unitOfWork = unitOfWorkFactory.Create())
+            {
+                Add(unitOfWork);
+            }
+        }
+
+        public void Add(IUnitOfWork<Games> unitOfWork)
+        {
+            var game = mapper.Map<Games>(this);
+            unitOfWork.EntityRepository.Add(game);
+            unitOfWork.Save();
         }
     }
 }

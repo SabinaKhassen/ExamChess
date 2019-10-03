@@ -23,24 +23,24 @@ namespace BussinessLayer.BussinessObjects
             this.unityContainer = unityContainer;
         }
 
-        public CountryBO GetAuthorsListById(int? id)
+        public CountryBO GetCountriesListById(int? id)
         {
             CountryBO countries;
 
             using (var unitOfWork = unitOfWorkFactory.Create())
             {
-                countries = unitOfWork.EntityRepository.GetAll().Where(a => a.Id == id).Select(item => AutoMapper<Countries, CountryBO>.Map(item)).FirstOrDefault();
+                countries = unitOfWork.EntityRepository.GetAll().Where(a => a.Id == id).Select(item => mapper.Map<CountryBO>(item)).FirstOrDefault();
             }
             return countries;
         }
 
-        public List<CountryBO> GetAuthorsList()
+        public List<CountryBO> GetCountriesList()
         {
             List<CountryBO> countries = new List<CountryBO>();
 
             using (var unitOfWork = unitOfWorkFactory.Create())
             {
-                countries = unitOfWork.EntityRepository.GetAll().Select(item => AutoMapper<Countries, CountryBO>.Map(item)).ToList();
+                countries = unitOfWork.EntityRepository.GetAll().Select(item => mapper.Map<CountryBO>(item)).ToList();
             }
             return countries;
         }

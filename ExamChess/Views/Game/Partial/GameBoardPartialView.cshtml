@@ -1,0 +1,21 @@
+﻿@model ExamChess.ViewModels.GameViewModel
+
+<h2>@Model.ChessTypeId</h2>
+
+<div id="json"></div>
+
+<script src="http://code.jquery.com/jquery-3.1.1.min.js"></script>
+<script>
+    //var str = 'GameBoardJson(' + Model.ColorId + ', ' + Model.Id + ')';
+    if (@Model != null)
+    {
+        $.ajax({
+            url: '@Url.Action($"GameBoardJson({Model.ColorId}, {Model.ColorId})")',
+            method: 'GET',
+            data: {},
+            success: function (data) {
+                $("#json").html(data);
+            }
+        })
+    }
+</script>

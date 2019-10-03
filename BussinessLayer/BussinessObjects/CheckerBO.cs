@@ -19,7 +19,9 @@ namespace BussinessLayer.BussinessObjects
         public int PositionX { get; set; }
         public int PositionY { get; set; }
         public int ColorId { get; set; }
-        public int CheckerTypeId { get; set; }
+        public bool IsQueen { get; set; }
+        public bool IsEaten { get; set; }
+        public DateTime? Movement { get; set; }
 
         public CheckerBO(IMapper mapper, UnitOfWorkFactory<Checkers> unitOfWorkFactory, IUnityContainer unityContainer)
             : base(mapper, unitOfWorkFactory)
@@ -27,26 +29,41 @@ namespace BussinessLayer.BussinessObjects
             this.unityContainer = unityContainer;
         }
 
-        public CheckerBO GetAuthorsListById(int? id)
+        public CheckerBO GetCheckersListById(int? id)
         {
             CheckerBO checkers;
 
             using (var unitOfWork = unitOfWorkFactory.Create())
             {
-                checkers = unitOfWork.EntityRepository.GetAll().Where(a => a.Id == id).Select(item => AutoMapper<Checkers, CheckerBO>.Map(item)).FirstOrDefault();
+                checkers = unitOfWork.EntityRepository.GetAll().Where(a => a.Id == id).Select(item => mapper.Map<CheckerBO>(item)).FirstOrDefault();
             }
             return checkers;
         }
 
-        public List<CheckerBO> GetAuthorsList()
+        public List<CheckerBO> GetCheckersList()
         {
             List<CheckerBO> checkers = new List<CheckerBO>();
 
             using (var unitOfWork = unitOfWorkFactory.Create())
             {
-                checkers = unitOfWork.EntityRepository.GetAll().Select(item => AutoMapper<Checkers, CheckerBO>.Map(item)).ToList();
+                checkers = unitOfWork.EntityRepository.GetAll().Select(item => mapper.Map<CheckerBO>(item)).ToList();
             }
             return checkers;
+        }
+
+        public void Save()
+        {
+            using (var unitOfWork = unitOfWorkFactory.Create())
+            {
+                Add(unitOfWork);
+            }
+        }
+
+        public void Add(IUnitOfWork<Checkers> unitOfWork)
+        {
+            var checker = mapper.Map<Checkers>(this);
+            unitOfWork.EntityRepository.Add(checker);
+            unitOfWork.Save();
         }
     }
 }

@@ -18,6 +18,10 @@ namespace DataLayer.Entities
 
         public int ChessTypeId { get; set; }
 
+        public DateTime BeginGame { get; set; }
+
+        public DateTime EndGame { get; set; }
+
         public virtual BoardColors BoardColors { get; set; }
 
         [ForeignKey("ChessTypeId")]

@@ -70,6 +70,18 @@
     <Compile Include="Migrations\201910021513050_CheckersImproved.Designer.cs">
       <DependentUpon>201910021513050_CheckersImproved.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201910031315503_TimeGame.cs" />
+    <Compile Include="Migrations\201910031315503_TimeGame.Designer.cs">
+      <DependentUpon>201910031315503_TimeGame.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201910031352474_TimeChecker.cs" />
+    <Compile Include="Migrations\201910031352474_TimeChecker.Designer.cs">
+      <DependentUpon>201910031352474_TimeChecker.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201910031437295_InsertStuff.cs" />
+    <Compile Include="Migrations\201910031437295_InsertStuff.Designer.cs">
+      <DependentUpon>201910031437295_InsertStuff.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Repositories\IRepository.cs" />
@@ -88,6 +100,15 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201910021513050_CheckersImproved.resx">
       <DependentUpon>201910021513050_CheckersImproved.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201910031315503_TimeGame.resx">
+      <DependentUpon>201910031315503_TimeGame.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201910031352474_TimeChecker.resx">
+      <DependentUpon>201910031352474_TimeChecker.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201910031437295_InsertStuff.resx">
+      <DependentUpon>201910031437295_InsertStuff.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

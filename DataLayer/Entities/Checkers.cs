@@ -31,5 +31,7 @@ namespace DataLayer.Entities
         public bool IsQueen { get; set; }
 
         public bool IsEaten { get; set; }
+
+        public DateTime? Movement { get; set; }
     }
 }

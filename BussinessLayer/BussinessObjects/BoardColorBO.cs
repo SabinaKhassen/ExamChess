@@ -24,24 +24,24 @@ namespace BussinessLayer.BussinessObjects
             this.unityContainer = unityContainer;
         }
 
-        public BoardColorBO GetAuthorsListById(int? id)
+        public BoardColorBO GetBoardColorsListById(int? id)
         {
             BoardColorBO colors;
 
             using (var unitOfWork = unitOfWorkFactory.Create())
             {
-                colors = unitOfWork.EntityRepository.GetAll().Where(a => a.Id == id).Select(item => AutoMapper<BoardColors, BoardColorBO>.Map(item)).FirstOrDefault();
+                colors = unitOfWork.EntityRepository.GetAll().Where(a => a.Id == id).Select(item => mapper.Map<BoardColorBO>(item)).FirstOrDefault();
             }
             return colors;
         }
 
-        public List<BoardColorBO> GetAuthorsList()
+        public List<BoardColorBO> GetBoardColorsList()
         {
             List<BoardColorBO> colors = new List<BoardColorBO>();
 
             using (var unitOfWork = unitOfWorkFactory.Create())
             {
-                colors = unitOfWork.EntityRepository.GetAll().Select(item => AutoMapper<BoardColors, BoardColorBO>.Map(item)).ToList();
+                colors = unitOfWork.EntityRepository.GetAll().Select(item => mapper.Map<BoardColorBO>(item)).ToList();
             }
             return colors;
         }

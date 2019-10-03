@@ -1,6 +1,8 @@
+using ExamChess.App_Start;
 using System;
-
+using System.Web.Mvc;
 using Unity;
+using Unity.AspNet.Mvc;
 
 namespace ExamChess
 {
@@ -42,6 +44,10 @@ namespace ExamChess
 
             // TODO: Register your type's mappings here.
             // container.RegisterType<IProductRepository, ProductRepository>();
+
+            AutoMapperConfig.RegisterWithUnity(container);
+            container.RegisterInstance<IUnityContainer>(container);
+            DependencyResolver.SetResolver(new UnityDependencyResolver(container));
         }
     }
 }

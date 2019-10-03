@@ -23,24 +23,24 @@ namespace BussinessLayer.BussinessObjects
             this.unityContainer = unityContainer;
         }
 
-        public ChessTypeBO GetAuthorsListById(int? id)
+        public ChessTypeBO GetChessTypesListById(int? id)
         {
             ChessTypeBO types;
 
             using (var unitOfWork = unitOfWorkFactory.Create())
             {
-                types = unitOfWork.EntityRepository.GetAll().Where(a => a.Id == id).Select(item => AutoMapper<ChessTypes, ChessTypeBO>.Map(item)).FirstOrDefault();
+                types = unitOfWork.EntityRepository.GetAll().Where(a => a.Id == id).Select(item => mapper.Map<ChessTypeBO>(item)).FirstOrDefault();
             }
             return types;
         }
 
-        public List<ChessTypeBO> GetAuthorsList()
+        public List<ChessTypeBO> GetChessTypesList()
         {
             List<ChessTypeBO> types = new List<ChessTypeBO>();
 
             using (var unitOfWork = unitOfWorkFactory.Create())
             {
-                types = unitOfWork.EntityRepository.GetAll().Select(item => AutoMapper<ChessTypes, ChessTypeBO>.Map(item)).ToList();
+                types = unitOfWork.EntityRepository.GetAll().Select(item => mapper.Map<ChessTypeBO>(item)).ToList();
             }
             return types;
         }

@@ -1,0 +1,26 @@
+﻿
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Game</h2>
+
+<button type="button" class="createButton btn btn-primary">Start game</button>
+
+<div id="createOrEdit">
+    @Html.Partial("Partial/EditPartialView", new ExamChess.ViewModels.GameViewModel())
+</div>
+
+<script src="http://code.jquery.com/jquery-3.1.1.min.js"></script>
+<script type="text/javascript">
+    $(".createButton").click(() => {
+            $.ajax({
+                url: '@Url.Action("Create")',
+                method: 'GET',
+                success: function (data) {
+                    $("#createOrEdit").html(data);
+                    $("#modal").modal("show");
+                }
+            })
+        })
+</script>

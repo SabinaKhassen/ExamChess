@@ -24,24 +24,24 @@ namespace BussinessLayer.BussinessObjects
             this.unityContainer = unityContainer;
         }
 
-        public CityBO GetAuthorsListById(int? id)
+        public CityBO GetCitiesListById(int? id)
         {
             CityBO cities;
 
             using (var unitOfWork = unitOfWorkFactory.Create())
             {
-                cities = unitOfWork.EntityRepository.GetAll().Where(a => a.Id == id).Select(item => AutoMapper<Cities, CityBO>.Map(item)).FirstOrDefault();
+                cities = unitOfWork.EntityRepository.GetAll().Where(a => a.Id == id).Select(item => mapper.Map<CityBO>(item)).FirstOrDefault();
             }
             return cities;
         }
 
-        public List<CityBO> GetAuthorsList()
+        public List<CityBO> GetCitiesList()
         {
             List<CityBO> cities = new List<CityBO>();
 
             using (var unitOfWork = unitOfWorkFactory.Create())
             {
-                cities = unitOfWork.EntityRepository.GetAll().Select(item => AutoMapper<Cities, CityBO>.Map(item)).ToList();
+                cities = unitOfWork.EntityRepository.GetAll().Select(item => mapper.Map<CityBO>(item)).ToList();
             }
             return cities;
         }

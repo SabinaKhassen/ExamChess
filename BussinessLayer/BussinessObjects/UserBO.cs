@@ -28,24 +28,24 @@ namespace BussinessLayer.BussinessObjects
             this.unityContainer = unityContainer;
         }
 
-        public UserBO GetAuthorsListById(int? id)
+        public UserBO GetUsersListById(int? id)
         {
             UserBO users;
 
             using (var unitOfWork = unitOfWorkFactory.Create())
             {
-                users = unitOfWork.EntityRepository.GetAll().Where(a => a.Id == id).Select(item => AutoMapper<Users, UserBO>.Map(item)).FirstOrDefault();
+                users = unitOfWork.EntityRepository.GetAll().Where(a => a.Id == id).Select(item => mapper.Map<UserBO>(item)).FirstOrDefault();
             }
             return users;
         }
 
-        public List<UserBO> GetAuthorsList()
+        public List<UserBO> GetUsersList()
         {
             List<UserBO> users = new List<UserBO>();
 
             using (var unitOfWork = unitOfWorkFactory.Create())
             {
-                users = unitOfWork.EntityRepository.GetAll().Select(item => AutoMapper<Users, UserBO>.Map(item)).ToList();
+                users = unitOfWork.EntityRepository.GetAll().Select(item => mapper.Map<UserBO>(item)).ToList();
             }
             return users;
         }

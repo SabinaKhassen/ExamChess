@@ -23,24 +23,24 @@ namespace BussinessLayer.BussinessObjects
             this.unityContainer = unityContainer;
         }
 
-        public RoleBO GetAuthorsListById(int? id)
+        public RoleBO GetRolesListById(int? id)
         {
             RoleBO roles;
 
             using (var unitOfWork = unitOfWorkFactory.Create())
             {
-                roles = unitOfWork.EntityRepository.GetAll().Where(a => a.Id == id).Select(item => AutoMapper<Roles, RoleBO>.Map(item)).FirstOrDefault();
+                roles = unitOfWork.EntityRepository.GetAll().Where(a => a.Id == id).Select(item => mapper.Map<RoleBO>(item)).FirstOrDefault();
             }
             return roles;
         }
 
-        public List<RoleBO> GetAuthorsList()
+        public List<RoleBO> GetRolesList()
         {
             List<RoleBO> roles = new List<RoleBO>();
 
             using (var unitOfWork = unitOfWorkFactory.Create())
             {
-                roles = unitOfWork.EntityRepository.GetAll().Select(item => AutoMapper<Roles, RoleBO>.Map(item)).ToList();
+                roles = unitOfWork.EntityRepository.GetAll().Select(item => mapper.Map<RoleBO>(item)).ToList();
             }
             return roles;
         }
