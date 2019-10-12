@@ -12,6 +12,8 @@ namespace ExamChess.Controllers
 {
     public class GameController : Controller
     {
+        bool wasCreated;
+        int idCreated;
         IMapper mapper;
 
         public GameController(IMapper mapper)
@@ -22,6 +24,8 @@ namespace ExamChess.Controllers
         // GET: Game
         public ActionResult Index()
         {
+            ViewBag.Game = null;
+
             return View();
         }
 
@@ -57,27 +61,34 @@ namespace ExamChess.Controllers
             gameBO.PlayerOne = 1;
             gameBO.PlayerTwo = 2;
             gameBO.ChessTypeId = chessType;
-            gameBO.ColorId = color;
+            gameBO.BoardColorId = color;
             gameBO.BeginGame = DateTime.Now;
             gameBO.EndGame = DateTime.Now;
 
             gameBO.Save();
 
+            //gameBO = DependencyResolver.Current.GetService<GameBO>();
+
             var game = mapper.Map<GameViewModel>(gameBO.GetGamesListById(gameBO.Id));
+
             return PartialView("Partial/GameBoardPartialView", game);
         }
 
         [HttpGet]
-        public ActionResult ColorDropDown()
+        public JsonResult ColorDropDown()
         {
-            var colorBO = DependencyResolver.Current.GetService<ColorBO>();
-            var colorList = colorBO.GetColorsList().Select(item => mapper.Map<ColorViewModel>(item)).ToList();
+            var boardColorBO = DependencyResolver.Current.GetService<BoardColorBO>();
+            var boardColorList = boardColorBO.GetBoardColorsList().Select(item => mapper.Map<BoardColorViewModel>(item)).ToList();
 
-            return Json(colorList.Select(c => new { c.Id, c.Color }), JsonRequestBehavior.AllowGet);
+            var colorBO = DependencyResolver.Current.GetService<ColorBO>();
+
+            return Json(boardColorList
+                .Select(c => new { c.Id, Color = colorBO.GetColorsListById(c.ColorOne).Color + " " + colorBO.GetColorsListById(c.ColorTwo).Color }), 
+                JsonRequestBehavior.AllowGet);
         }
 
         [HttpGet]
-        public ActionResult ChessTypeDropDown()
+        public JsonResult ChessTypeDropDown()
         {
             var chessTypeBO = DependencyResolver.Current.GetService<ChessTypeBO>();
             var chessTypeList = chessTypeBO.GetChessTypesList().Select(item => mapper.Map<ChessTypeViewModel>(item)).ToList();
@@ -86,46 +97,71 @@ namespace ExamChess.Controllers
         }
 
         [HttpGet]
-        public ActionResult GameBoardJson(int colorId, int gameId)
+        public JsonResult GameBoardJson(int colorId, int gameId)
         {
+            var boardColorBO = DependencyResolver.Current.GetService<BoardColorBO>();
+            var id = boardColorBO.GetBoardColorsListById(colorId).ColorOne;
+
+            int position = 0;
+
             for (var row = 0; row < 3; row++)
             {
-                if (row % 2 != 0)
+                if (row % 2 == 0)
                 {
-                    for (var line = 0; line < 8; line = line + 2)
+                    for (var line = 0; line < 8; line++)
                     {
-                        var checker = DependencyResolver.Current.GetService<CheckerBO>();
-                        checker.ColorId = colorId;
-                        checker.GameId = gameId;
-                        checker.IsEaten = false;
-                        checker.IsQueen = false;
-                        checker.Movement = DateTime.Now;
-                        checker.PositionX = line;
-                        checker.PositionY = row;
-                        checker.Save();
+                        if (line % 2 == 0)
+                        {
+                            var checker = DependencyResolver.Current.GetService<CheckerBO>();
+                            checker.ColorId = id;
+                            checker.GameId = gameId;
+                            checker.IsEaten = false;
+                            checker.IsQueen = false;
+                            checker.Movement = DateTime.Now;
+                            checker.Position = position;
+                            checker.Save();
+                        }
+
+                        position++;
                     }
                 }
                 else
                 {
-                    for (var line = 1; line < 8; line = line + 2)
+                    for (var line = 0; line < 8; line++)
                     {
-                        var checker = DependencyResolver.Current.GetService<CheckerBO>();
-                        checker.ColorId = colorId;
-                        checker.GameId = gameId;
-                        checker.IsEaten = false;
-                        checker.IsQueen = false;
-                        checker.Movement = DateTime.Now;
-                        checker.PositionX = line;
-                        checker.PositionY = row;
-                        checker.Save();
+                        if (line % 2 != 0)
+                        {
+                            var checker = DependencyResolver.Current.GetService<CheckerBO>();
+                            checker.ColorId = id;
+                            checker.GameId = gameId;
+                            checker.IsEaten = false;
+                            checker.IsQueen = false;
+                            checker.Movement = DateTime.Now;
+                            checker.Position = position;
+                            checker.Save();
+                        }
+
+                        position++;
                     }
                 }
             }
 
-            var positionBO = DependencyResolver.Current.GetService<CheckerBO>().GetCheckersList();
+            var positionBO = DependencyResolver.Current.GetService<CheckerBO>().GetCheckersList().Where(p => p.GameId == gameId).ToList();
             var checkers = positionBO.Select(m => mapper.Map<CheckerViewModel>(m)).ToList();
 
             return Json(checkers, JsonRequestBehavior.AllowGet);
         }
+
+        [HttpGet]
+        public JsonResult GameReturnBoard(int id)
+        {
+            var gameBO = DependencyResolver.Current.GetService<GameBO>();
+            var game = mapper.Map<GameViewModel>(gameBO.GetGamesListById(id));
+
+            return Json(new { game.Id, game.PlayerOne, game.PlayerTwo, game.ChessTypeId, game.BoardColorId }, JsonRequestBehavior.AllowGet);
+        }
+
+        [HttpPost]
+        public JsonResult UpdateCheckers()
     }
 }

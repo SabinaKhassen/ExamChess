@@ -16,8 +16,7 @@ namespace BussinessLayer.BussinessObjects
 
         public int Id { get; set; }
         public int GameId { get; set; }
-        public int PositionX { get; set; }
-        public int PositionY { get; set; }
+        public int Position { get; set; }
         public int ColorId { get; set; }
         public bool IsQueen { get; set; }
         public bool IsEaten { get; set; }

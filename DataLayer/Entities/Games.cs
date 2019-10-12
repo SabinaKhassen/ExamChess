@@ -14,7 +14,7 @@ namespace DataLayer.Entities
 
         public int PlayerTwo { get; set; }
 
-        public int ColorId { get; set; }
+        public int BoardColorId { get; set; }
 
         public int ChessTypeId { get; set; }
 

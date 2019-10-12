@@ -33,7 +33,7 @@ namespace DataLayer.Entities
             modelBuilder.Entity<BoardColors>()
                 .HasMany(e => e.Games)
                 .WithRequired(e => e.BoardColors)
-                .HasForeignKey(e => e.ColorId)
+                .HasForeignKey(e => e.BoardColorId)
                 .WillCascadeOnDelete(false);
 
             modelBuilder.Entity<Cities>()

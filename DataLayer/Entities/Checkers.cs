@@ -18,9 +18,7 @@ namespace DataLayer.Entities
         [ForeignKey("GameId")]
         public virtual Games Games { get; set; }
 
-        public int PositionX { get; set; }
-
-        public int PositionY { get; set; }
+        public int Position { get; set; }
 
         [Required]
         [Display(Name = "Colors")]

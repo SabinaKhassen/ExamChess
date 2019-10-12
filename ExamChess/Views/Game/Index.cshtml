@@ -11,7 +11,11 @@
     @Html.Partial("Partial/EditPartialView", new ExamChess.ViewModels.GameViewModel())
 </div>
 
-<script src="http://code.jquery.com/jquery-3.1.1.min.js"></script>
+<div id="chessBoard">
+    @Html.Partial("Partial/GameBoardPartialView", ViewBag.Game as ExamChess.ViewModels.GameViewModel)
+</div>
+
+<script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
 <script type="text/javascript">
     $(".createButton").click(() => {
             $.ajax({

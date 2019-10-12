@@ -1,0 +1,49 @@
+﻿body {
+    margin: 0;
+    padding: 0;
+}
+
+#board {
+    width: 816px;
+    height: 816px;
+    display: flex;
+    flex-direction: row;
+    align-content: center;
+    flex-wrap: wrap-reverse;
+    border: 1px solid black;
+}
+
+.boardSquare {
+    width: 100px;
+    height: 100px;
+    border: 1px solid black;
+    display: flex;
+    flex-direction: row;
+    align-content: center;
+    align-items: center;
+}
+
+.whiteBackground {
+    background-color: white;
+}
+
+.blackBackground {
+    background-color: #666666;
+}
+
+.blackCheckers {
+    background-color: black;
+}
+
+.checkerCircle {
+    width: 85px;
+    height: 85px;
+    border: 1px solid black;
+    border-radius: 50%;
+    align-items: center;
+    margin: 0 auto;
+}
+
+.possibleMove {
+    background-color: red;
+}
