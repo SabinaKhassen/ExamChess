@@ -2,6 +2,8 @@
 using BussinessLayer;
 using BussinessLayer.BussinessObjects;
 using ExamChess.ViewModels;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,9 +14,8 @@ namespace ExamChess.Controllers
 {
     public class GameController : Controller
     {
-        bool wasCreated;
-        int idCreated;
         IMapper mapper;
+        public UserViewModel user;
 
         public GameController(IMapper mapper)
         {
@@ -22,7 +23,7 @@ namespace ExamChess.Controllers
         }
 
         // GET: Game
-        public ActionResult Index()
+        public ActionResult Index(UserViewModel user)
         {
             ViewBag.Game = null;
 
@@ -119,6 +120,7 @@ namespace ExamChess.Controllers
                             checker.IsQueen = false;
                             checker.Movement = DateTime.Now;
                             checker.Position = position;
+                            checker.PrevPosition = position;
                             checker.Save();
                         }
 
@@ -138,6 +140,7 @@ namespace ExamChess.Controllers
                             checker.IsQueen = false;
                             checker.Movement = DateTime.Now;
                             checker.Position = position;
+                            checker.PrevPosition = position;
                             checker.Save();
                         }
 
@@ -162,6 +165,10 @@ namespace ExamChess.Controllers
         }
 
         [HttpPost]
-        public JsonResult UpdateCheckers()
+        public void AddCheckers(CheckerViewModel json)
+        {
+            var checkerBO = mapper.Map<CheckerBO>(json);
+            checkerBO.Save();
+        }
     }
 }

@@ -1,0 +1,177 @@
+﻿@model ExamChess.ViewModels.UserViewModel
+
+<div id="modalRegister" class="modal fade bd-example-modal-sm" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-sm">
+        <div class="modal-content">
+            @using (Ajax.BeginForm("Register", new AjaxOptions { }))
+            {
+                @Html.AntiForgeryToken()
+
+                <div class="form-horizontal">
+                    <h4>Register</h4>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                    <hr />
+                    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                    @Html.HiddenFor(model => model.Id)
+
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.FIO, htmlAttributes: new { @class = "control-label col-md-2" })
+                        <div class="col-md-10">
+                            @Html.EditorFor(model => model.FIO, new { htmlAttributes = new { @class = "form-control", @id = "fio", @onchange = "Validation()" } })
+                            @Html.ValidationMessageFor(model => model.FIO, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.Email, htmlAttributes: new { @class = "control-label col-md-2" })
+                        <div class="col-md-10">
+                            @Html.EditorFor(model => model.Email, new { htmlAttributes = new { @class = "form-control", @id = "email", @onchange = "Validation()" } })
+                            @Html.ValidationMessageFor(model => model.Email, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.Nick, htmlAttributes: new { @class = "control-label col-md-2" })
+                        <div class="col-md-10">
+                            @Html.EditorFor(model => model.Nick, new { htmlAttributes = new { @class = "form-control", @id = "nickEdit" } })
+                            @Html.ValidationMessageFor(model => model.Nick, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.Password, htmlAttributes: new { @class = "control-label col-md-2" })
+                        <div class="col-md-10">
+                            @Html.PasswordFor(model => model.Password, new { htmlAttributes = new { @class = "form-control", @onchange = "Validation()" } })
+                            @Html.ValidationMessageFor(model => model.Password, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.CityId, htmlAttributes: new { @class = "control-label col-md-2" })
+                        <div class="col-md-10">
+                            @*@Html.EditorFor(model => model.CityId, new { htmlAttributes = new { @class = "form-control" } })*@
+                            <select id="cityList" name="city" class="form-control"></select>
+                            @Html.ValidationMessageFor(model => model.CityId, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.RoleId, htmlAttributes: new { @class = "control-label col-md-2" })
+                        <div class="col-md-10">
+                            @*@Html.EditorFor(model => model.RoleId, new { htmlAttributes = new { @class = "form-control" } })*@
+                            <select id="roleList" name="role" class="form-control"></select>
+                            @Html.ValidationMessageFor(model => model.RoleId, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+
+                    <div class="modal-footer">
+                        <div class="col-md-offset-2 col-md-10">
+                            <input type="submit" id="saveRegister" value="Save" class="btn btn-default" />
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+    </div>
+</div>
+
+
+<script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+<script type="text/javascript">
+    var users;
+
+    $.ajax({
+        url: '@Url.Action("CityDropDown")',
+        type: 'GET',
+        data: {},
+        success: function (data) {
+            console.log(data)
+            console.log(data.length)
+            var s = '';
+            for (var i = 0; i < data.length; i++) {
+                s += '<option value="' + data[i].Id + '">' + data[i].Name + ' - ' + data[i].Country + '</option>';
+            }
+            $("#cityList").html(s);
+        }
+    })
+
+    $.ajax({
+        url: '@Url.Action("RoleDropDown")',
+        type: 'GET',
+        data: {},
+        success: function (data) {
+            console.log(data)
+            console.log(data.length)
+            var s = '';
+            for (var i = 0; i < data.length; i++) {
+                s += '<option value="' + data[i].Id + '">' + data[i].Status + '</option>';
+            }
+            $("#roleList").html(s);
+        }
+    })
+
+    $.ajax({
+        url: '@Url.Action("UserInfo")',
+        type: 'GET',
+        data: {},
+        success: function (data) {
+            var json = JSON.stringify(data);
+            users = JSON.parse(json);
+        }
+    })
+
+
+    $("#nickEdit").change(function () {
+        var check;
+        for (var i = 0; i < users.length; i++) {
+            if ($(this).val() == users[i].Nick)
+                check = true;
+            else
+                check = false;
+        }
+
+        if ($(this).val() == "" || check) {
+            $(this).css("border-color", "red");
+            $("#saveRegister").attr("disabled", "disabled");
+        }
+        else {
+            $(this).css("border-color", "black");
+            $("#saveRegister").removeAttr("disabled ");
+        }
+    })
+
+    function Validation() {
+        if ($(this).val() == "") {
+            $(this).css("border-color", "red");
+            $("#saveRegister").attr("disabled", "disabled");
+        }
+        else {
+            $(this).css("border-color", "black");
+            $("#saveRegister").removeAttr("disabled ");
+        }
+    }
+
+    $("#saveRegister").click(function (e) {
+        e.preventDefault();
+
+        if ($("#fio").val() != "" && $("#email").val() != "" && $("#nickEdit").val() != "" && $("#Password") != "")
+        {
+            var json = { FIO: $("#fio").val(), Email: $("#email").val(), Nick: $("#nickEdit").val(), Password: $("#Password").val(), CityId: $("#cityList").children()[$("#cityList")[0].selectedIndex].value, RoleId: $("#roleList").children()[$("#roleList")[0].selectedIndex].value }
+
+            $.ajax({
+                url: '/Home/Register',
+                type: 'POST',
+                datatype: 'json',
+                contentType: 'application/json; charset=utf-8',
+                data: JSON.stringify(json),
+                success: function (data) { }
+            })
+        }
+        else {
+            alert("Missing fields!!!");
+        }
+    })
+</script>

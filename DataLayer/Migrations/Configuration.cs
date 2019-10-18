@@ -49,6 +49,7 @@ namespace DataLayer.Migrations
             db.ChessTypes.AddOrUpdate(new ChessTypes { Name = "Plow" });
 
             db.BoardColors.AddOrUpdate(new BoardColors { ColorOne = 1, ColorTwo = 3 });
+            db.BoardColors.AddOrUpdate(new BoardColors { ColorOne = 2, ColorTwo = 3 });
 
             db.SaveChanges();
         }

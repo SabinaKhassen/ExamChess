@@ -134,6 +134,7 @@
       <HintPath>..\packages\Microsoft.AspNet.WebPages.3.2.7\lib\net45\System.Web.WebPages.Razor.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml" />
     <Reference Include="System.Configuration" />
     <Reference Include="System.Web.Services" />
@@ -200,6 +201,7 @@
     <Compile Include="ViewModels\ColorViewModel.cs" />
     <Compile Include="ViewModels\CountryViewModel.cs" />
     <Compile Include="ViewModels\GameViewModel.cs" />
+    <Compile Include="ViewModels\LogIn.cs" />
     <Compile Include="ViewModels\RoleViewModel.cs" />
     <Compile Include="ViewModels\UserViewModel.cs" />
   </ItemGroup>
@@ -253,7 +255,8 @@
     <Content Include="Views\Game\Index.cshtml" />
     <Content Include="Views\Game\Partial\EditPartialView.cshtml" />
     <Content Include="Views\Game\Partial\GameBoardPartialView.cshtml" />
-    <Content Include="Views\Game\Board.cshtml" />
+    <Content Include="Views\Home\Partial\RegisterPartialView.cshtml" />
+    <Content Include="Views\Home\Partial\LogInPartialView.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

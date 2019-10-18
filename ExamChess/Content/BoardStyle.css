@@ -47,3 +47,12 @@
 .possibleMove {
     background-color: red;
 }
+
+.registerButtons {
+    width: 700px;
+    height: 20px;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    align-items: center;
+}

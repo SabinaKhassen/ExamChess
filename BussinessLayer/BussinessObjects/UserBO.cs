@@ -49,5 +49,30 @@ namespace BussinessLayer.BussinessObjects
             }
             return users;
         }
+
+        public void Save()
+        {
+            using(var unitOfWork = unitOfWorkFactory.Create())
+            {
+                if (Id == 0)
+                    Add(unitOfWork);
+                else
+                    Update(unitOfWork);
+            }
+        }
+
+        public void Add(IUnitOfWork<Users> unitOfWork)
+        {
+            var user = mapper.Map<Users>(this);
+            unitOfWork.EntityRepository.Add(user);
+            unitOfWork.Save();
+        }
+
+        public void Update(IUnitOfWork<Users> unitOfWork)
+        {
+            var user = mapper.Map<Users>(this);
+            unitOfWork.EntityRepository.Update(user);
+            unitOfWork.Save();
+        }
     }
 }

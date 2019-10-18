@@ -1,6 +1,6 @@
-﻿
-
-var game;
+﻿var game;
+var lastChecker;
+var checkersList;
 
 $(document).ready(function () {
     var length;
@@ -50,12 +50,16 @@ $(document).ready(function () {
 })
 
 function Checkers() {
-
+    var ids = checkersList["0"].Id;
+    console.log(ids);
     for (var i = 0; i < $("#board").children().length / 2 - Math.sqrt($("#board").children().length) ; i++) {
         if ($($("#board").children()[i]).hasClass("blackBackground")) {
             var div = document.createElement("div");
+            $(div).attr("id", ids);
             $(div).addClass("checkerCircle blackCheckers")
             $("#board").children()[i].append(div);
+
+            ids++;
         }
     }
 
@@ -89,7 +93,7 @@ function Move() {
     $("#board").children()[52].append(div);
 }
 
-function MultipleMoves(checkerId) {
+function MultipleMoves(checkerId, checkerClass) {
 
     console.log('\nIn');
 
@@ -104,7 +108,7 @@ function MultipleMoves(checkerId) {
 
         if (leftUpper < 64) {
 
-            if ($($("#board").children()[leftUpper]).hasClass("blackBackground") && $($($("#board").children()[leftUpper]).children()).hasClass("blackCheckers") == false && $($("#board").children()[leftUpper]).children().length != 0) {
+            if ($($("#board").children()[leftUpper]).hasClass("blackBackground") && $($($("#board").children()[leftUpper]).children()).hasClass(checkerClass) == false && $($("#board").children()[leftUpper]).children().length != 0) {
                 var id = leftUpper + Math.sqrt($("#board").children().length) - 1;
                 console.log('LeftUpperId: ' + id);
                 if (id < 64 && $($("#board").children()[id]).hasClass("possibleMove") == false && $($("#board").children()[id]).hasClass("blackBackground") && $($("#board").children()[id]).children().length == 0) {
@@ -115,13 +119,13 @@ function MultipleMoves(checkerId) {
                     var rightUpperId = id + Math.sqrt($("#board").children().length) + 1;
                     var rightBottomId = id - Math.sqrt($("#board").children().length) + 1;
 
-                    if (($($("#board").children()[leftUpperId]).hasClass("blackBackground") && $($($("#board").children()[leftUpperId]).children()).hasClass("blackCheckers") == false && $($("#board").children()[leftUpperId]).children().length != 0)
+                    if (($($("#board").children()[leftUpperId]).hasClass("blackBackground") && $($($("#board").children()[leftUpperId]).children()).hasClass(checkerClass) == false && $($("#board").children()[leftUpperId]).children().length != 0)
 
-                    || ($($("#board").children()[leftBottomId]).hasClass("blackBackground") && $($($("#board").children()[leftBottomId]).children()).hasClass("blackCheckers") == false && $($("#board").children()[leftBottomId]).children().length != 0)
+                    || ($($("#board").children()[leftBottomId]).hasClass("blackBackground") && $($($("#board").children()[leftBottomId]).children()).hasClass(checkerClass) == false && $($("#board").children()[leftBottomId]).children().length != 0)
 
-                    || ($($("#board").children()[rightUpperId]).hasClass("blackBackground") && $($($("#board").children()[rightUpperId]).children()).hasClass("blackCheckers") == false && $($("#board").children()[rightUpperId]).children().length != 0)
+                    || ($($("#board").children()[rightUpperId]).hasClass("blackBackground") && $($($("#board").children()[rightUpperId]).children()).hasClass(checkerClass) == false && $($("#board").children()[rightUpperId]).children().length != 0)
 
-                    || ($($("#board").children()[rightBottomId]).hasClass("blackBackground") && $($($("#board").children()[rightBottomId]).children()).hasClass("blackCheckers") == false && $($("#board").children()[rightBottomId]).children().length != 0)) {
+                    || ($($("#board").children()[rightBottomId]).hasClass("blackBackground") && $($($("#board").children()[rightBottomId]).children()).hasClass(checkerClass) == false && $($("#board").children()[rightBottomId]).children().length != 0)) {
 
                         MultipleMoves(id);
                     }
@@ -131,7 +135,7 @@ function MultipleMoves(checkerId) {
 
         if (leftBottom < 64) {
 
-            if ($($("#board").children()[leftBottom]).hasClass("blackBackground") && $($($("#board").children()[leftBottom]).children()).hasClass("blackCheckers") == false && $($("#board").children()[leftBottom]).children().length != 0) {
+            if ($($("#board").children()[leftBottom]).hasClass("blackBackground") && $($($("#board").children()[leftBottom]).children()).hasClass(checkerClass) == false && $($("#board").children()[leftBottom]).children().length != 0) {
                 var id = leftBottom - Math.sqrt($("#board").children().length) - 1;
                 console.log('LeftBottomId: ' + id);
                 if (id < 64 && $($("#board").children()[id]).hasClass("possibleMove") == false && $($("#board").children()[id]).hasClass("blackBackground") && $($("#board").children()[id]).children().length == 0) {
@@ -142,13 +146,13 @@ function MultipleMoves(checkerId) {
                     var rightUpperId = id + Math.sqrt($("#board").children().length) + 1;
                     var rightBottomId = id - Math.sqrt($("#board").children().length) + 1;
 
-                    if (($($("#board").children()[leftUpperId]).hasClass("blackBackground") && $($($("#board").children()[leftUpperId]).children()).hasClass("blackCheckers") == false && $($("#board").children()[leftUpperId]).children().length != 0)
+                    if (($($("#board").children()[leftUpperId]).hasClass("blackBackground") && $($($("#board").children()[leftUpperId]).children()).hasClass(checkerClass) == false && $($("#board").children()[leftUpperId]).children().length != 0)
 
-                    || ($($("#board").children()[leftBottomId]).hasClass("blackBackground") && $($($("#board").children()[leftBottomId]).children()).hasClass("blackCheckers") == false && $($("#board").children()[leftBottomId]).children().length != 0)
+                    || ($($("#board").children()[leftBottomId]).hasClass("blackBackground") && $($($("#board").children()[leftBottomId]).children()).hasClass(checkerClass) == false && $($("#board").children()[leftBottomId]).children().length != 0)
 
-                    || ($($("#board").children()[rightUpperId]).hasClass("blackBackground") && $($($("#board").children()[rightUpperId]).children()).hasClass("blackCheckers") == false && $($("#board").children()[rightUpperId]).children().length != 0)
+                    || ($($("#board").children()[rightUpperId]).hasClass("blackBackground") && $($($("#board").children()[rightUpperId]).children()).hasClass(checkerClass) == false && $($("#board").children()[rightUpperId]).children().length != 0)
 
-                    || ($($("#board").children()[rightBottomId]).hasClass("blackBackground") && $($($("#board").children()[rightBottomId]).children()).hasClass("blackCheckers") == false && $($("#board").children()[rightBottomId]).children().length != 0)) {
+                    || ($($("#board").children()[rightBottomId]).hasClass("blackBackground") && $($($("#board").children()[rightBottomId]).children()).hasClass(checkerClass) == false && $($("#board").children()[rightBottomId]).children().length != 0)) {
 
                         MultipleMoves(id);
                     }
@@ -158,7 +162,7 @@ function MultipleMoves(checkerId) {
 
         if (rightUpper < 64) {
 
-            if ($($("#board").children()[rightUpper]).hasClass("blackBackground") && $($($("#board").children()[rightUpper]).children()).hasClass("blackCheckers") == false && $($("#board").children()[rightUpper]).children().length != 0) {
+            if ($($("#board").children()[rightUpper]).hasClass("blackBackground") && $($($("#board").children()[rightUpper]).children()).hasClass(checkerClass) == false && $($("#board").children()[rightUpper]).children().length != 0) {
                 var id = rightUpper + Math.sqrt($("#board").children().length) + 1;
                 console.log('RightUpperId: ' + id);
                 if (id < 64 && $($("#board").children()[id]).hasClass("possibleMove") == false && $($("#board").children()[id]).hasClass("blackBackground") && $($("#board").children()[id]).children().length == 0) {
@@ -169,13 +173,13 @@ function MultipleMoves(checkerId) {
                     var rightUpperId = id + Math.sqrt($("#board").children().length) + 1;
                     var rightBottomId = id - Math.sqrt($("#board").children().length) + 1;
 
-                    if (($($("#board").children()[leftUpperId]).hasClass("blackBackground") && $($($("#board").children()[leftUpperId]).children()).hasClass("blackCheckers") == false && $($("#board").children()[leftUpperId]).children().length != 0)
+                    if (($($("#board").children()[leftUpperId]).hasClass("blackBackground") && $($($("#board").children()[leftUpperId]).children()).hasClass(checkerClass) == false && $($("#board").children()[leftUpperId]).children().length != 0)
 
-                    || ($($("#board").children()[leftBottomId]).hasClass("blackBackground") && $($($("#board").children()[leftBottomId]).children()).hasClass("blackCheckers") == false && $($("#board").children()[leftBottomId]).children().length != 0)
+                    || ($($("#board").children()[leftBottomId]).hasClass("blackBackground") && $($($("#board").children()[leftBottomId]).children()).hasClass(checkerClass) == false && $($("#board").children()[leftBottomId]).children().length != 0)
 
-                    || ($($("#board").children()[rightUpperId]).hasClass("blackBackground") && $($($("#board").children()[rightUpperId]).children()).hasClass("blackCheckers") == false && $($("#board").children()[rightUpperId]).children().length != 0)
+                    || ($($("#board").children()[rightUpperId]).hasClass("blackBackground") && $($($("#board").children()[rightUpperId]).children()).hasClass(checkerClass) == false && $($("#board").children()[rightUpperId]).children().length != 0)
 
-                    || ($($("#board").children()[rightBottomId]).hasClass("blackBackground") && $($($("#board").children()[rightBottomId]).children()).hasClass("blackCheckers") == false && $($("#board").children()[rightBottomId]).children().length != 0)) {
+                    || ($($("#board").children()[rightBottomId]).hasClass("blackBackground") && $($($("#board").children()[rightBottomId]).children()).hasClass(checkerClass) == false && $($("#board").children()[rightBottomId]).children().length != 0)) {
 
                         MultipleMoves(id);
                     }
@@ -185,8 +189,8 @@ function MultipleMoves(checkerId) {
 
         if (rightBottom < 64) {
             console.log('RightBottom: ' + rightBottom);
-            console.log($($($("#board").children()[rightBottom]).children()).hasClass("blackCheckers") == false);
-            if ($($("#board").children()[rightBottom]).hasClass("blackBackground") && $($($("#board").children()[rightBottom]).children()).hasClass("blackCheckers") == false && $($("#board").children()[rightBottom]).children().length != 0) {
+            console.log($($($("#board").children()[rightBottom]).children()).hasClass(checkerClass) == false);
+            if ($($("#board").children()[rightBottom]).hasClass("blackBackground") && $($($("#board").children()[rightBottom]).children()).hasClass(checkerClass) == false && $($("#board").children()[rightBottom]).children().length != 0) {
                 var id = rightBottom - Math.sqrt($("#board").children().length) + 1;
                 console.log('RightBottomId: ' + id);
                 if (id < 64 && $($("#board").children()[id]).hasClass("possibleMove") == false && $($("#board").children()[id]).hasClass("blackBackground") && $($("#board").children()[id]).children().length == 0) {
@@ -197,13 +201,13 @@ function MultipleMoves(checkerId) {
                     var rightUpperId = id + Math.sqrt($("#board").children().length) + 1;
                     var rightBottomId = id - Math.sqrt($("#board").children().length) + 1;
 
-                    if (($($("#board").children()[leftUpperId]).hasClass("blackBackground") && $($($("#board").children()[leftUpperId]).children()).hasClass("blackCheckers") == false && $($("#board").children()[leftUpperId]).children().length != 0)
+                    if (($($("#board").children()[leftUpperId]).hasClass("blackBackground") && $($($("#board").children()[leftUpperId]).children()).hasClass(checkerClass) == false && $($("#board").children()[leftUpperId]).children().length != 0)
 
-                    || ($($("#board").children()[leftBottomId]).hasClass("blackBackground") && $($($("#board").children()[leftBottomId]).children()).hasClass("blackCheckers") == false && $($("#board").children()[leftBottomId]).children().length != 0)
+                    || ($($("#board").children()[leftBottomId]).hasClass("blackBackground") && $($($("#board").children()[leftBottomId]).children()).hasClass(checkerClass) == false && $($("#board").children()[leftBottomId]).children().length != 0)
 
-                    || ($($("#board").children()[rightUpperId]).hasClass("blackBackground") && $($($("#board").children()[rightUpperId]).children()).hasClass("blackCheckers") == false && $($("#board").children()[rightUpperId]).children().length != 0)
+                    || ($($("#board").children()[rightUpperId]).hasClass("blackBackground") && $($($("#board").children()[rightUpperId]).children()).hasClass(checkerClass) == false && $($("#board").children()[rightUpperId]).children().length != 0)
 
-                    || ($($("#board").children()[rightBottomId]).hasClass("blackBackground") && $($($("#board").children()[rightBottomId]).children()).hasClass("blackCheckers") == false && $($("#board").children()[rightBottomId]).children().length != 0)) {
+                    || ($($("#board").children()[rightBottomId]).hasClass("blackBackground") && $($($("#board").children()[rightBottomId]).children()).hasClass(checkerClass) == false && $($("#board").children()[rightBottomId]).children().length != 0)) {
 
                         MultipleMoves(id);
                     }
@@ -216,8 +220,9 @@ function MultipleMoves(checkerId) {
 function GetCheckerJson(data) {
     console.log(data);
     var json = JSON.stringify(data);
-    var obj = JSON.parse(json);
-    length = obj.length;
+    checkersList = JSON.parse(json);
+    length = checkersList.length;
+    console.log(checkersList);
 
     var idClickedChecker;
 
@@ -275,49 +280,125 @@ function GetCheckerJson(data) {
             console.log('\nLeft: ' + idLeftUpper);
             console.log('Right: ' + idRightUpper);
 
-            if (skip == 0) {
-                if (
-                ($($("#board").children()[idLeftUpper]).hasClass("blackBackground") && $($($("#board").children()[idLeftUpper]).children()).hasClass("blackCheckers") == false && $($("#board").children()[idLeftUpper]).children().length != 0)
+            if ($($(this).children()).hasClass("blackCheckers")) {
+                if (skip == 0) {
+                    if (
+                    ($($("#board").children()[idLeftUpper]).hasClass("blackBackground") && $($($("#board").children()[idLeftUpper]).children()).hasClass("blackCheckers") == false && $($("#board").children()[idLeftUpper]).children().length != 0)
 
-                || ($($("#board").children()[idLeftBottom]).hasClass("blackBackground") && $($($("#board").children()[idLeftBottom]).children()).hasClass("blackCheckers") == false && $($("#board").children()[idLeftBottom]).children().length != 0)
+                    || ($($("#board").children()[idLeftBottom]).hasClass("blackBackground") && $($($("#board").children()[idLeftBottom]).children()).hasClass("blackCheckers") == false && $($("#board").children()[idLeftBottom]).children().length != 0)
 
-                || ($($("#board").children()[idRightUpper]).hasClass("blackBackground") && $($($("#board").children()[idRightUpper]).children()).hasClass("blackCheckers") == false && $($("#board").children()[idRightUpper]).children().length != 0)
+                    || ($($("#board").children()[idRightUpper]).hasClass("blackBackground") && $($($("#board").children()[idRightUpper]).children()).hasClass("blackCheckers") == false && $($("#board").children()[idRightUpper]).children().length != 0)
 
-                || ($($("#board").children()[idRightBottom]).hasClass("blackBackground") && $($($("#board").children()[idRightBottom]).children()).hasClass("blackCheckers") == false && $($("#board").children()[idRightBottom]).children().length != 0)) {
+                    || ($($("#board").children()[idRightBottom]).hasClass("blackBackground") && $($($("#board").children()[idRightBottom]).children()).hasClass("blackCheckers") == false && $($("#board").children()[idRightBottom]).children().length != 0)) {
 
-                    MultipleMoves(parseInt($(this).attr("id")));
-                    skip++;
-                }
-
-                else {
-                    if ($($("#board").children()[idLeftUpper]).children().length == 0 && $($("#board").children()[idLeftUpper]).hasClass("blackBackground")) {
-                        $($("#board").children()[idLeftUpper]).addClass("possibleMove");
-                        skip = 0;
+                        MultipleMoves(parseInt($(this).attr("id")), "blackCheckers");
+                        skip++;
                     }
-                    if ($($("#board").children()[idRightUpper]).children().length == 0 && $($("#board").children()[idRightUpper]).hasClass("blackBackground")) {
-                        $($("#board").children()[idRightUpper]).addClass("possibleMove");
-                        skip = 0;
+
+                    else {
+                        if ($($("#board").children()[idLeftUpper]).children().length == 0 && $($("#board").children()[idLeftUpper]).hasClass("blackBackground")) {
+                            $($("#board").children()[idLeftUpper]).addClass("possibleMove");
+                            skip = 0;
+                        }
+                        if ($($("#board").children()[idRightUpper]).children().length == 0 && $($("#board").children()[idRightUpper]).hasClass("blackBackground")) {
+                            $($("#board").children()[idRightUpper]).addClass("possibleMove");
+                            skip = 0;
+                        }
+                    }
+                }
+            }
+            else {
+                if (skip == 0) {
+                    if (
+                    ($($("#board").children()[idLeftUpper]).hasClass("blackBackground") && $($($("#board").children()[idLeftUpper]).children()).hasClass("whiteBackground") == false && $($("#board").children()[idLeftUpper]).children().length != 0)
+
+                    || ($($("#board").children()[idLeftBottom]).hasClass("blackBackground") && $($($("#board").children()[idLeftBottom]).children()).hasClass("whiteBackground") == false && $($("#board").children()[idLeftBottom]).children().length != 0)
+
+                    || ($($("#board").children()[idRightUpper]).hasClass("blackBackground") && $($($("#board").children()[idRightUpper]).children()).hasClass("whiteBackground") == false && $($("#board").children()[idRightUpper]).children().length != 0)
+
+                    || ($($("#board").children()[idRightBottom]).hasClass("blackBackground") && $($($("#board").children()[idRightBottom]).children()).hasClass("whiteBackground") == false && $($("#board").children()[idRightBottom]).children().length != 0)) {
+
+                        MultipleMoves(parseInt($(this).attr("id")), "whiteBackground");
+                        skip++;
+                    }
+
+                    else {
+                        if ($($("#board").children()[idLeftBottom]).children().length == 0 && $($("#board").children()[idLeftBottom]).hasClass("blackBackground")) {
+                            $($("#board").children()[idLeftBottom]).addClass("possibleMove");
+                            skip = 0;
+                        }
+                        if ($($("#board").children()[idRightBottom]).children().length == 0 && $($("#board").children()[idRightBottom]).hasClass("blackBackground")) {
+                            $($("#board").children()[idRightBottom]).addClass("possibleMove");
+                            skip = 0;
+                        }
                     }
                 }
             }
         }
         else {
             if ($(this).hasClass("possibleMove")) {
-                $($("#board").children()[idClickedChecker]).children().remove();
+                console.log(skip);
+                if ($($(this).children()).hasClass("blackCheckers")) {
+                    $($("#board").children()[idClickedChecker]).children().remove();
 
-                var div = document.createElement("div");
-                $(div).addClass("checkerCircle blackCheckers");
-                $(this).removeClass("possibleMove");
-                $(this).append(div);
+                    var div = document.createElement("div");
+                    $(div).addClass("checkerCircle blackCheckers");
+                    $(this).removeClass("possibleMove");
+                    $(this).append(div);
+                    skip = 0;
 
+                    if ($(this).attr("id") >= 56 && $(this).attr("id") < 64)
+                        IsQueen = true;
+                    else
+                        IsQueen = false;
 
+                    $($("#board").children()).removeClass("possibleMove");
+                }
+                else {
+                    $($("#board").children()[idClickedChecker]).children().remove();
+
+                    var div = document.createElement("div");
+                    $(div).addClass("checkerCircle whiteBackground");
+                    $(this).removeClass("possibleMove");
+                    $(this).append(div);
+                    skip = 0;
+
+                    if ($(this).attr("id") >= 56 && $(this).attr("id") < 64)
+                        IsQueen = true;
+                    else
+                        IsQueen = false;
+
+                    $($("#board").children()).removeClass("possibleMove");
+                }
+                //PostInfoChecker(idClickedChecker, $(this).attr("id"), IsQueen, false);
             }
         }
     })
 
     $($("#board").children()).dblclick(function () {
-        $($("#board").children()).removeClass("possibleMove");
-        skip = 0;
+        if ($(this).hasClass("posibbleMove") == false)
+        {
+            $($("#board").children()).removeClass("possibleMove");
+            skip = 0;
+        }
+        else {
+            var idCheck = $($($("#board").children()[idClickedChecker]).children[0]).attr("id");
+            $($("#board").children()[idClickedChecker]).children().remove();
+
+            var div = document.createElement("div");
+            $(div).addClass("checkerCircle blackCheckers");
+            $(this).removeClass("possibleMove");
+            $(this).append(div);
+            skip = 0;
+
+            if ($(this).attr("id") >= 56 && $(this).attr("id") < 64)
+                IsQueen = true;
+            else
+                IsQueen = false;
+
+            $($("#board").children()).removeClass("possibleMove");
+            PostInfoChecker(idCheck, $(this).attr("id"), IsQueen, false);
+        }
     })
 }
 
@@ -325,11 +406,18 @@ function GameInfoJson(data) {
     console.log(data);
     var json = JSON.stringify(data);
     game = JSON.parse(json);
-    console.log(object);
+    console.log(game);
 }
 
-function PostInfoChecker(previousPosition, currentPosition) {
+function PostInfoChecker(previousPosition, currentPosition, isQueen, isEaten) {
+    var checkerId = checkersList["11"].ColorId;
+    var json = { GameId: game.Id, ColorId: checkerId, IsQueen: isQueen, IsEaten: isEaten, Movement: new Date(), Position: currentPosition, PrevPosition: previousPosition };
     $.ajax({
-        url: 
+        url: "/Game/AddCheckers",
+        type: 'POST',   
+        datatype: 'json',
+        contentType: 'application/json; charset=utf-8',
+        data: JSON.stringify(json),
+        success: function(data) {}
     })
 }

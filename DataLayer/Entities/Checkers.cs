@@ -20,6 +20,8 @@ namespace DataLayer.Entities
 
         public int Position { get; set; }
 
+        public int PrevPosition { get; set; }
+
         [Required]
         [Display(Name = "Colors")]
         public virtual int ColorId { get; set; }
