@@ -5,10 +5,10 @@ using System.Web;
 
 namespace ExamChess.ViewModels
 {
-    public class BoardColorViewModel
-    {
-        public int Id { get; set; }
-        public int ColorOne { get; set; }
-        public int ColorTwo { get; set; }
-    }
+    //public class BoardColorViewModel
+    //{
+    //    public int Id { get; set; }
+    //    public int ColorOne { get; set; }
+    //    public int ColorTwo { get; set; }
+    //}
 }

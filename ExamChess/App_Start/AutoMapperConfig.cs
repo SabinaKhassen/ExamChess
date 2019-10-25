@@ -25,31 +25,31 @@ namespace ExamChess.App_Start
             return new MapperConfiguration(cfg =>
             {
                 #region BoardColors
-                cfg.CreateMap<BoardColorBO, BoardColors>().
-                ConstructUsing(item => DependencyResolver.Current.GetService<BoardColors>());
+                //cfg.CreateMap<BoardColorBO, BoardColors>().
+                //ConstructUsing(item => DependencyResolver.Current.GetService<BoardColors>());
 
-                cfg.CreateMap<BoardColorBO, BoardColorViewModel>().
-                ConstructUsing(item => DependencyResolver.Current.GetService<BoardColorViewModel>());
+                //cfg.CreateMap<BoardColorBO, BoardColorViewModel>().
+                //ConstructUsing(item => DependencyResolver.Current.GetService<BoardColorViewModel>());
 
-                cfg.CreateMap<BoardColorViewModel, BoardColorBO>().
-                ConstructUsing(item => DependencyResolver.Current.GetService<BoardColorBO>());
+                //cfg.CreateMap<BoardColorViewModel, BoardColorBO>().
+                //ConstructUsing(item => DependencyResolver.Current.GetService<BoardColorBO>());
 
-                cfg.CreateMap<BoardColors, BoardColorBO>().
-                ConstructUsing(item => DependencyResolver.Current.GetService<BoardColorBO>());
+                //cfg.CreateMap<BoardColors, BoardColorBO>().
+                //ConstructUsing(item => DependencyResolver.Current.GetService<BoardColorBO>());
                 #endregion
 
                 #region Checkers
-                cfg.CreateMap<CheckerBO, Checkers>().
-                ConstructUsing(item => DependencyResolver.Current.GetService<Checkers>());
+                //cfg.CreateMap<CheckerBO, Checkers>().
+                //ConstructUsing(item => DependencyResolver.Current.GetService<Checkers>());
 
-                cfg.CreateMap<CheckerBO, CheckerViewModel>().
-                ConstructUsing(item => DependencyResolver.Current.GetService<CheckerViewModel>());
+                //cfg.CreateMap<CheckerBO, CheckerViewModel>().
+                //ConstructUsing(item => DependencyResolver.Current.GetService<CheckerViewModel>());
 
-                cfg.CreateMap<CheckerViewModel, CheckerBO>().
-                ConstructUsing(item => DependencyResolver.Current.GetService<CheckerBO>());
+                //cfg.CreateMap<CheckerViewModel, CheckerBO>().
+                //ConstructUsing(item => DependencyResolver.Current.GetService<CheckerBO>());
 
-                cfg.CreateMap<Checkers, CheckerBO>().
-                ConstructUsing(item => DependencyResolver.Current.GetService<CheckerBO>());
+                //cfg.CreateMap<Checkers, CheckerBO>().
+                //ConstructUsing(item => DependencyResolver.Current.GetService<CheckerBO>());
                 #endregion
 
                 #region ChessTypes

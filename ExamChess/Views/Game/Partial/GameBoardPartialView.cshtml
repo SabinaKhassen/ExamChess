@@ -7,7 +7,7 @@
     <div id="board"></div>
     <!-- <div class="checkerCircle"></div> -->
 
-<script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+@*<script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>*@
 <script language="javascript" src="../Scripts/BoardLoad.js"></script>
 <script>
     $.ajax({
@@ -20,18 +20,16 @@
             GameInfoJson(data);
         }
     })
-        $.ajax({
+        @*$.ajax({
             url: '@Url.Action("GameBoardJson")',
             method: 'GET',
             data: {
-                colorId: @Model.BoardColorId,
                 gameId: @Model.Id
             },
             success: function(data) {
-                GetCheckerJson(data);
+                GetCheckerJson();
             }
-        })
+        })*@
    
 </script>
-
 }

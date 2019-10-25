@@ -8,6 +8,6 @@ namespace ExamChess.ViewModels
     public class LogIn
     {
         public string Nick { get; set; }
-        public string Password { get; set; }
+        public string PasswordLogin { get; set; }
     }
 }

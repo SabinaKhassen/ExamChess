@@ -18,23 +18,23 @@ namespace DataLayer.Entities
         {
         }
 
-        public virtual DbSet<BoardColors> BoardColors { get; set; }
+        //public virtual DbSet<BoardColors> BoardColors { get; set; }
         public virtual DbSet<ChessTypes> ChessTypes { get; set; }
         public virtual DbSet<Cities> Cities { get; set; }
         public virtual DbSet<Countries> Countries { get; set; }
         public virtual DbSet<Games> Games { get; set; }
         public virtual DbSet<Roles> Roles { get; set; }
         public virtual DbSet<Users> Users { get; set; }
-        public virtual DbSet<Checkers> Checkers { get; set; }
+        //public virtual DbSet<Checkers> Checkers { get; set; }
         public virtual DbSet<Colors> Colors { get; set; }
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
-            modelBuilder.Entity<BoardColors>()
-                .HasMany(e => e.Games)
-                .WithRequired(e => e.BoardColors)
-                .HasForeignKey(e => e.BoardColorId)
-                .WillCascadeOnDelete(false);
+            //modelBuilder.Entity<BoardColors>()
+            //    .HasMany(e => e.Games)
+            //    .WithRequired(e => e.BoardColors)
+            //    .HasForeignKey(e => e.BoardColorId)
+            //    .WillCascadeOnDelete(false);
 
             modelBuilder.Entity<Cities>()
                 .HasMany(e => e.Users)

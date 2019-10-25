@@ -14,7 +14,9 @@ namespace DataLayer.Entities
 
         public int PlayerTwo { get; set; }
 
-        public int BoardColorId { get; set; }
+        public int ColorOneId { get; set; }
+
+        public int ColorTwoId { get; set; }
 
         public int ChessTypeId { get; set; }
 
@@ -22,7 +24,9 @@ namespace DataLayer.Entities
 
         public DateTime EndGame { get; set; }
 
-        public virtual BoardColors BoardColors { get; set; }
+        public int WinnerId { get; set; }
+
+        //public virtual BoardColors BoardColors { get; set; }
 
         [ForeignKey("ChessTypeId")]
         public virtual ChessTypes ChessTypes { get; set; }
@@ -30,5 +34,14 @@ namespace DataLayer.Entities
         public virtual Users Users { get; set; }
 
         public virtual Users Users1 { get; set; }
+
+        [ForeignKey("WinnerId")]
+        public virtual Users Users2 { get; set; }
+
+        [ForeignKey("ColorOneId")]
+        public virtual Colors Colors { get; set; }
+
+        [ForeignKey("ColorTwoId")]
+        public virtual Colors Colors1 { get; set; }
     }
 }

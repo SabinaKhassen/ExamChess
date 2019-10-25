@@ -53,18 +53,24 @@ namespace ExamChess.Controllers
         }
 
         [HttpPost]
-        public ActionResult Register(UserViewModel model)
+        public ActionResult Register(UserViewModel model/*, string password*/)
         {
             var userBO = DependencyResolver.Current.GetService<UserBO>();
             var userList = userBO.GetUsersList().Select(m => mapper.Map<UserViewModel>(m)).ToList();
-            var findMatch = userList.Where(u => u.Nick == model.Nick).First();
-            if (findMatch == null)
+
+            var findMatch = userList.Where(u => u.Nick == model.Nick).ToList();
+
+            model.RoleId = DependencyResolver.Current.GetService<RoleBO>().GetRolesList().Where(r => r.Status == "User").Select(r => r.Id).FirstOrDefault();
+
+            if (findMatch.Count == 0)
             {
                 var userModel = mapper.Map<UserBO>(model);
 
                 userModel.Save();
+                userBO = DependencyResolver.Current.GetService<UserBO>();
+                var user = userBO.GetUsersList().Select(m => mapper.Map<UserViewModel>(m)).Last();
 
-                return RedirectToActionPermanent("Index", "Game", new { user = userModel });
+                return RedirectToAction("Index", "Game", new { userId = user.Id });
             }
             else
             {
@@ -92,9 +98,27 @@ namespace ExamChess.Controllers
         public ActionResult Login(LogIn model)
         {
             var userBO = DependencyResolver.Current.GetService<UserBO>();
+            var match = userBO.GetUsersList().Where(u => u.Nick == model.Nick && u.Password == model.PasswordLogin).ToList();
+            if (match.Count != 0)
+            {
+                var userLog = mapper.Map<UserViewModel>(match[0]);
 
+                var adminRole = DependencyResolver.Current.GetService<RoleBO>().GetRolesList().Where(r => r.Status == "Admin").Select(r => r.Id).FirstOrDefault();
 
-            return RedirectToAction("Index", "Game"/*, new { user = }*/);
+                if (userLog.RoleId == adminRole)
+                {
+                    return RedirectToAction("Index", "Admin", new { userId = userLog.Id });
+                    //return Json(new { userId = userLog.Id, admin = true });
+                }
+                else
+                {
+                    return RedirectToActionPermanent("Index", "Game", new { userId = userLog.Id });
+                }
+            }
+            else
+            {
+                return new HttpStatusCodeResult(401, "Nick or password don't match!");
+            }
         }
 
 

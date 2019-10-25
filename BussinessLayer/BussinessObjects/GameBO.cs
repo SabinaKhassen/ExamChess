@@ -17,10 +17,12 @@ namespace BussinessLayer.BussinessObjects
         public int Id { get; set; }
         public int PlayerOne { get; set; }
         public int PlayerTwo { get; set; }
-        public int BoardColorId { get; set; }
+        public int ColorOneId { get; set; }
+        public int ColorTwoId { get; set; }
         public int ChessTypeId { get; set; }
         public DateTime BeginGame { get; set; }
         public DateTime EndGame { get; set; }
+        public int WinnerId { get; set; }
 
         public GameBO(IMapper mapper, UnitOfWorkFactory<Games> unitOfWorkFactory, IUnityContainer unityContainer)
             : base(mapper, unitOfWorkFactory)
@@ -54,7 +56,10 @@ namespace BussinessLayer.BussinessObjects
         {
             using (var unitOfWork = unitOfWorkFactory.Create())
             {
-                Add(unitOfWork);
+                if (Id == 0)
+                    Add(unitOfWork);
+                else
+                    Update(unitOfWork);
             }
         }
 
@@ -63,6 +68,22 @@ namespace BussinessLayer.BussinessObjects
             var game = mapper.Map<Games>(this);
             unitOfWork.EntityRepository.Add(game);
             unitOfWork.Save();
+        }
+
+        public void Update(IUnitOfWork<Games> unitOfWork)
+        {
+            var game = mapper.Map<Games>(this);
+            unitOfWork.EntityRepository.Update(game);
+            unitOfWork.Save();
+        }
+
+        public void Delete(int id)
+        {
+            using (var unitOfWork = unitOfWorkFactory.Create())
+            {
+                unitOfWork.EntityRepository.Delete(id);
+                unitOfWork.Save();
+            }
         }
     }
 }

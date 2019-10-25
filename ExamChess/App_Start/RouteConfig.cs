@@ -16,8 +16,26 @@ namespace ExamChess
             routes.MapRoute(
                 name: "Default",
                 url: "{controller}/{action}/{id}",
-                defaults: new { controller = "Game", action = "Index", id = UrlParameter.Optional }
+                defaults: new { controller = "Home", action = "Index", id = UrlParameter.Optional }
             );
+
+            routes.MapRoute(
+                name: "Game",
+                url: "{controller}/{action}/{userId}",
+                defaults: new { controller = "Game", action = "Index", userId = UrlParameter.Optional }
+            );
+
+            routes.MapRoute(
+                name: "Admin",
+                url: "{controller}/{action}/{userId}",
+                defaults: new { controller = "Admin", action = "Index", userId = UrlParameter.Optional }
+            );
+
+            //routes.MapRoute(
+            //    name: "Block", 
+            //    url: "{controller}/{action}/{id}?block",
+            //    defaults: new { controller = "Admin", action = "Block", id = UrlParameter.Optional, block = UrlParameter.Optional }
+            //);
         }
     }
 }

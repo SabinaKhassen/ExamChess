@@ -3,6 +3,7 @@ using DataLayer.Entities;
 using DataLayer.UnitOfWork;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -21,6 +22,8 @@ namespace BussinessLayer.BussinessObjects
         public string Password { get; set; }
         public int CityId { get; set; }
         public int RoleId { get; set; }
+        public bool Blocked { get; set; }
+        public bool Deleted { get; set; }
 
         public UserBO(IMapper mapper, UnitOfWorkFactory<Users> unitOfWorkFactory, IUnityContainer unityContainer)
             : base(mapper, unitOfWorkFactory)
@@ -73,6 +76,17 @@ namespace BussinessLayer.BussinessObjects
             var user = mapper.Map<Users>(this);
             unitOfWork.EntityRepository.Update(user);
             unitOfWork.Save();
+        }
+
+        public void Delete(int id)
+        {
+            using (var unitOfWork = unitOfWorkFactory.Create())
+            {
+                var users = unitOfWork.EntityRepository.GetAll();
+                var user = users.Where(g => g.Id == id).FirstOrDefault();
+                user.Deleted = true;
+                unitOfWork.Save();
+            }
         }
     }
 }

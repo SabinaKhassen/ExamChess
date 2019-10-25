@@ -1,56 +1,60 @@
 ﻿@model ExamChess.ViewModels.GameViewModel
 
 
-<div id="modal" class="modal fade bd-example-modal-sm" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
+<div id="modalCreate" class="modal fade bd-example-modal-sm" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-sm">
         <div class="modal-content">
             @using (Ajax.BeginForm("Create", new AjaxOptions() { UpdateTargetId = "gameList" }))
             {
                 @Html.AntiForgeryToken()
 
-                <div class="form-horizontal">
-                    <h4>New Game</h4>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                    <hr />
-                    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-                    @Html.HiddenFor(model => model.Id)
-                    @Html.HiddenFor(model => model.PlayerOne)
-                    @Html.HiddenFor(model => model.PlayerTwo)
+            <div class="form-horizontal">
+                <h4>New Game</h4>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+                <hr />
+                @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                @Html.HiddenFor(model => model.Id)
+                @Html.HiddenFor(model => model.PlayerOne)
+                @Html.HiddenFor(model => model.PlayerTwo)
+                @Html.HiddenFor(model => model.ColorTwoId)
+                @Html.HiddenFor(model => model.BeginGame)
+                @Html.HiddenFor(model => model.EndGame)
 
-                    <div class="form-group">
-                        @Html.LabelFor(model => model.BoardColorId, htmlAttributes: new { @class = "control-label col-md-2" })
-                        <div class="col-md-10">
-                            @*@Html.EditorFor(model => model.ColorId, new { htmlAttributes = new { @class = "form-control" } })*@
-                            <select id="colorList" name="color" class="form-control"></select>
-                            @Html.ValidationMessageFor(model => model.BoardColorId, "", new { @class = "text-danger" })
-                        </div>
-                    </div>
-
-                    <div class="form-group">
-                        @Html.LabelFor(model => model.ChessTypeId, htmlAttributes: new { @class = "control-label col-md-2" })
-                        <div class="col-md-10">
-                            @*@Html.EditorFor(model => model.ChessTypeId, new { htmlAttributes = new { @class = "form-control" } })*@
-                            <select id="chessTypeList" name="chessType" class="form-control"></select>
-                            @Html.ValidationMessageFor(model => model.ChessTypeId, "", new { @class = "text-danger" })
-                        </div>
-                    </div>
-
-                    <div class="modal-footer">
-                        <div class="col-md-offset-2 col-md-10">
-                            <input type="submit" value="Save" class="btn btn-default" />
-                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                        </div>
+                <div class="form-group">
+                    @Html.LabelFor(model => model.ColorOneId, htmlAttributes: new { @class = "control-label col-md-2" })
+                    <div class="col-md-10">
+                        @*@Html.EditorFor(model => model.ColorId, new { htmlAttributes = new { @class = "form-control" } })*@
+                        <select id="colorList" name="color" class="form-control"></select>
+                        @Html.ValidationMessageFor(model => model.ColorOneId, "", new { @class = "text-danger" })
                     </div>
                 </div>
+
+                <div class="form-group">
+                    @Html.LabelFor(model => model.ChessTypeId, htmlAttributes: new { @class = "control-label col-md-2" })
+                    <div class="col-md-10">
+                        @*@Html.EditorFor(model => model.ChessTypeId, new { htmlAttributes = new { @class = "form-control" } })*@
+                        <select id="chessTypeList" name="chessType" class="form-control"></select>
+                        @Html.ValidationMessageFor(model => model.ChessTypeId, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+
+                <div class="modal-footer">
+                    <div class="col-md-offset-2 col-md-10">
+                        <input id="saveGame" type="submit" value="Save" class="btn btn-default" />
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    </div>
+                </div>
+            </div>
             }
         </div>
     </div>
 </div>
 
-<script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+@*<script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>*@
 <script type="text/javascript">
+    var gameNowId, playerOne, chessTypeId, colorOneId;
     $.ajax({
         url: '@Url.Action("ColorDropDown")',
         type: 'GET',
@@ -79,5 +83,99 @@
             }
             $("#chessTypeList").html(s);
         }
+    })
+
+    $("#saveGame").click(function (e) {
+        e.preventDefault();
+        
+
+        var json = { Id: 0, PlayerOne: 0, PlayerTwo: 0, ColorOneId: $("#colorList").children()[$("#colorList")[0].selectedIndex].value, ColorTwoId: $("#colorList").children()[$("#colorList")[0].selectedIndex].value, ChessTypeId: $("#chessTypeList").children()[$("#chessTypeList")[0].selectedIndex].value, BeginGame: null, EndGame: null, Deleted: false };
+
+        $.ajax({
+            url: '@Url.Action("Create")',
+            method: 'POST',
+            datatype: 'json',
+            contentType: 'application/json; charset=utf-8',
+            data: JSON.stringify(json),
+            success: function (data) {
+                console.log(data);
+                gameNowId = data.id;
+                playerOne = data.player;
+                chessTypeId = data.chesstype;
+                colorOneId = data.color;
+            }
+        })
+
+        console.log("GameId: " + gameNowId);
+        console.log("PlayerOne: " + playerOne);
+        console.log("ChessTypeId: " + chessTypeId);
+        console.log("ColorId: " + colorOneId);
+
+        var idTimer = setInterval(function () {
+            $.ajax({
+                url: '@Url.Action("GameMatches")',
+                method: 'GET',
+                data: {
+                    gameId: gameNowId,
+                    colorId: colorOneId,
+                    typeId: chessTypeId
+                },
+                success: function (data) {
+                    console.log(data);
+                    console.log(data[0].match);
+                    if (data[0].match) {
+                        clearInterval(idTimer);
+                        var search = { PrevId: data[0].currentId, Id: gameNowId, PlayerOne: playerOne, PlayerTwo: data[0].playerTwo, ColorOneId: colorOneId, ColorTwoId: data[0].colorTwo, ChessTypeId: chessTypeId, BeginGame: null, EndGame: null, Deleted: false };                 
+                        console.log(search);
+
+                        $.ajax({
+                            url: '@Url.Action("MatchFound")',
+                            method: 'POST',
+                            //datatype: 'json',
+                            //contentType: 'application/json; charset=utf-8',
+                            data: {
+                                PrevId: data[0].currentId,
+                                Id: gameNowId,
+                                PlayerOne: playerOne,
+                                PlayerTwo: data[0].playerTwo,
+                                ColorOneId: colorOneId,
+                                ColorTwoId: data[0].colorTwo,
+                                ChessTypeId: chessTypeId
+                            },
+                            success: function (data) {
+                                clearInterval(idTimer);
+                                $("body").html(data);
+                            }
+                        });
+                    }
+                    else {
+                        console.log("Wait");
+                        $("#modalWait").modal("show");
+                    }
+                }
+                
+            })
+        }, 1000);
+
+        $("#cancel").click(function (e) {
+            e.preventDefault();
+
+            clearInterval(idTimer);
+            $("#modalWait").modal("hide");
+            $("#modalCreate").modal("hide");
+            $.ajax({
+                url: '@Url.Action("StopWait")',
+                method: 'POST',
+                data: { game: gameNowId },
+                success: function (data) {
+                    if (data.stopped) {
+                        gameNowId = 0;
+                        playerOne = 0;
+                        chessTypeId = 0;
+                        colorOneId = 0;
+                    }
+                }
+            })
+        })
     })
 </script>

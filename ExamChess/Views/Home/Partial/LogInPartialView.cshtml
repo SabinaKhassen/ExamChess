@@ -9,7 +9,7 @@
 
                 <div class="form-horizontal">
                     <h4>Log In</h4>
-                    <button type="button" class="close" data-dismiss="modalLogin" aria-label="Close">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
                     <hr />
@@ -23,17 +23,18 @@
                     </div>
 
                     <div class="form-group">
-                        @Html.LabelFor(model => model.Password, htmlAttributes: new { @class = "control-label col-md-2" })
+                        <label class="control-label col-md-2">Password</label>
+                        @*@Html.LabelFor(model => model.PasswordLogin, htmlAttributes: new { @class = "control-label col-md-2" })*@
                         <div class="col-md-10">
-                            @Html.EditorFor(model => model.Password, new { htmlAttributes = new { @class = "form-control", @id = "password" } })
-                            @Html.ValidationMessageFor(model => model.Password, "", new { @class = "text-danger" })
+                            @Html.PasswordFor(model => model.PasswordLogin, new { @class = "form-control password" })
+                            @Html.ValidationMessageFor(model => model.PasswordLogin, "", new { @class = "text-danger" })
                         </div>
                     </div>
 
                     <div class="modal-footer">
                         <div class="col-md-offset-2 col-md-10">
-                            <input id="save" type="submit" value="Save" class="btn btn-default" />
-                            <button type="button" class="btn btn-secondary" data-dismiss="modalLogin">Close</button>
+                            <input id="saveLogin" type="submit" value="Login" class="btn btn-default" />
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
                         </div>
                     </div>
                 </div>
@@ -41,3 +42,62 @@
         </div>
     </div>
 </div>
+
+<script type="text/javascript">
+
+    $("#nick").on("input", function () {
+        if ($(this).val() == "") {
+            $(this).removeClass("ok");
+            $(this).addClass("error");
+            $("#saveLogin").attr("disabled", "disabled");
+        }
+        else {
+            $(this).addClass("ok");
+            $(this).removeClass("error");
+            $("#saveLogin").removeAttr("disabled");
+        }
+    })
+
+    $(".password").on("input", function () {
+        console.log($(this));
+        if ($(this).val() == "") {
+            $(this).removeClass("ok");
+            $(this).addClass("error");
+            $("#saveLogin").attr("disabled", "disabled");
+        }
+        else {
+            $(this).addClass("ok");
+            $(this).removeClass("error");
+            $("#saveLogin").removeAttr("disabled");
+        }
+    })
+
+    $("#saveLogin").click(function (e) {
+        e.preventDefault();
+
+
+        if ($("#nick").val() != "" && $("#PasswordLogin").val() != "")
+        {
+            var json = { Nick: $("#nick").val(), PasswordLogin: $("#PasswordLogin").val() }
+
+            $("#modalLogin").modal("hide");
+
+            $.ajax({
+                url: '/Home/Login',
+                type: 'POST',
+                datatype: 'json',
+                contentType: 'application/json; charset=utf-8',
+                data: JSON.stringify(json),
+                success: function (data) {
+                    $("body").html(data);
+                },
+                error: function (data, message) {
+                    alert(data.statusText);
+                }
+            })
+        }
+        else {
+            alert("Missing fields!!!");
+        }
+    })
+</script>

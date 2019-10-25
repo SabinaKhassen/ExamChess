@@ -56,3 +56,11 @@
     justify-content: space-around;
     align-items: center;
 }
+
+.error {
+    border: 1px solid red;
+}
+
+.ok {
+    border: 1px solid #cccccc;
+}

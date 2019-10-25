@@ -30,6 +30,10 @@ namespace ExamChess
 
             bundles.Add(new ScriptBundle("~/Scripts/BoardLoad").Include(
                       "~/Scripts/BoardLoad.js"));
+
+            bundles.Add(new ScriptBundle("~/bundles/jquery.unobtrusive").Include(
+                        "~/Scripts/jquery.unobtrusive-ajax.js",
+                        "~/Scripts/jquery.unobtrusive-ajax.min.js"));
         }
     }
 }

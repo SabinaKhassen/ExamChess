@@ -7,79 +7,91 @@
             {
                 @Html.AntiForgeryToken()
 
-                <div class="form-horizontal">
-                    <h4>Register</h4>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                    <hr />
-                    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-                    @Html.HiddenFor(model => model.Id)
+            <div class="form-horizontal">
+                <h4>Register</h4>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+                <hr />
+                @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                @Html.HiddenFor(model => model.Id)
+                @Html.HiddenFor(model => model.RoleId)
+                @Html.HiddenFor(model => model.Blocked)
+                @Html.HiddenFor(model => model.Deleted)
 
-                    <div class="form-group">
-                        @Html.LabelFor(model => model.FIO, htmlAttributes: new { @class = "control-label col-md-2" })
-                        <div class="col-md-10">
-                            @Html.EditorFor(model => model.FIO, new { htmlAttributes = new { @class = "form-control", @id = "fio", @onchange = "Validation()" } })
-                            @Html.ValidationMessageFor(model => model.FIO, "", new { @class = "text-danger" })
-                        </div>
-                    </div>
-
-                    <div class="form-group">
-                        @Html.LabelFor(model => model.Email, htmlAttributes: new { @class = "control-label col-md-2" })
-                        <div class="col-md-10">
-                            @Html.EditorFor(model => model.Email, new { htmlAttributes = new { @class = "form-control", @id = "email", @onchange = "Validation()" } })
-                            @Html.ValidationMessageFor(model => model.Email, "", new { @class = "text-danger" })
-                        </div>
-                    </div>
-
-                    <div class="form-group">
-                        @Html.LabelFor(model => model.Nick, htmlAttributes: new { @class = "control-label col-md-2" })
-                        <div class="col-md-10">
-                            @Html.EditorFor(model => model.Nick, new { htmlAttributes = new { @class = "form-control", @id = "nickEdit" } })
-                            @Html.ValidationMessageFor(model => model.Nick, "", new { @class = "text-danger" })
-                        </div>
-                    </div>
-
-                    <div class="form-group">
-                        @Html.LabelFor(model => model.Password, htmlAttributes: new { @class = "control-label col-md-2" })
-                        <div class="col-md-10">
-                            @Html.PasswordFor(model => model.Password, new { htmlAttributes = new { @class = "form-control", @onchange = "Validation()" } })
-                            @Html.ValidationMessageFor(model => model.Password, "", new { @class = "text-danger" })
-                        </div>
-                    </div>
-
-                    <div class="form-group">
-                        @Html.LabelFor(model => model.CityId, htmlAttributes: new { @class = "control-label col-md-2" })
-                        <div class="col-md-10">
-                            @*@Html.EditorFor(model => model.CityId, new { htmlAttributes = new { @class = "form-control" } })*@
-                            <select id="cityList" name="city" class="form-control"></select>
-                            @Html.ValidationMessageFor(model => model.CityId, "", new { @class = "text-danger" })
-                        </div>
-                    </div>
-
-                    <div class="form-group">
-                        @Html.LabelFor(model => model.RoleId, htmlAttributes: new { @class = "control-label col-md-2" })
-                        <div class="col-md-10">
-                            @*@Html.EditorFor(model => model.RoleId, new { htmlAttributes = new { @class = "form-control" } })*@
-                            <select id="roleList" name="role" class="form-control"></select>
-                            @Html.ValidationMessageFor(model => model.RoleId, "", new { @class = "text-danger" })
-                        </div>
-                    </div>
-
-                    <div class="modal-footer">
-                        <div class="col-md-offset-2 col-md-10">
-                            <input type="submit" id="saveRegister" value="Save" class="btn btn-default" />
-                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                        </div>
+                <div class="form-group">
+                    @Html.LabelFor(model => model.FIO, htmlAttributes: new { @class = "control-label col-md-2" })
+                    <div class="col-md-10">
+                        @Html.EditorFor(model => model.FIO, new { htmlAttributes = new { @class = "form-control", @id = "fio" } })
+                        @Html.ValidationMessageFor(model => model.FIO, "", new { @class = "text-danger" })
                     </div>
                 </div>
+
+                <div class="form-group">
+                    @Html.LabelFor(model => model.Email, htmlAttributes: new { @class = "control-label col-md-2" })
+                    <div class="col-md-10">
+                        @Html.EditorFor(model => model.Email, new { htmlAttributes = new { @class = "form-control", @id = "email" } })
+                        @Html.ValidationMessageFor(model => model.Email, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    @Html.LabelFor(model => model.Nick, htmlAttributes: new { @class = "control-label col-md-2" })
+                    <div class="col-md-10">
+                        @Html.EditorFor(model => model.Nick, new { htmlAttributes = new { @class = "form-control", @id = "nickEdit" } })
+                        @Html.ValidationMessageFor(model => model.Nick, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    @Html.LabelFor(model => model.Password, htmlAttributes: new { @class = "control-label col-md-2" })
+                    <div class="col-md-10">
+                        @Html.PasswordFor(model => model.Password, new { @class = "form-control password" })
+                        @Html.ValidationMessageFor(model => model.Password, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    @Html.LabelFor(model => model.CityId, htmlAttributes: new { @class = "control-label col-md-2" })
+                    <div class="col-md-10">
+                        @*@Html.EditorFor(model => model.CityId, new { htmlAttributes = new { @class = "form-control" } })*@
+                        <select id="cityList" name="city" class="form-control"></select>
+                        @Html.ValidationMessageFor(model => model.CityId, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+
+                @*<div class="form-group">
+            @Html.LabelFor(model => model.RoleId, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.RoleId, new { htmlAttributes = new { @class = "form-control" } })
+                <select id="roleList" name="role" class="form-control"></select>
+                @Html.ValidationMessageFor(model => model.RoleId, "", new { @class = "text-danger" })
+            </div>
+        </div>*@
+
+                <div class="modal-footer">
+                    <div class="col-md-offset-2 col-md-10">
+                        <input type="submit" id="saveRegister" value="Save" class="btn btn-default" />
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    </div>
+                </div>
+            </div>
             }
         </div>
     </div>
 </div>
 
 
-<script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+@*<script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>*@
+<style>
+    .error {
+        border: 1px solid red;
+    }
+
+    .ok {
+        border: 1px solid #cccccc;
+    }
+</style>
 <script type="text/javascript">
     var users;
 
@@ -98,7 +110,7 @@
         }
     })
 
-    $.ajax({
+    @*$.ajax({
         url: '@Url.Action("RoleDropDown")',
         type: 'GET',
         data: {},
@@ -111,7 +123,7 @@
             }
             $("#roleList").html(s);
         }
-    })
+    })*@
 
     $.ajax({
         url: '@Url.Action("UserInfo")',
@@ -124,42 +136,75 @@
     })
 
 
-    $("#nickEdit").change(function () {
+    $("#nickEdit").on("input", function () {
         var check;
         for (var i = 0; i < users.length; i++) {
-            if ($(this).val() == users[i].Nick)
+            if ($(this).val() == users[i].Nick) {
                 check = true;
+                break;
+            }
             else
                 check = false;
         }
 
         if ($(this).val() == "" || check) {
-            $(this).css("border-color", "red");
+            $(this).removeClass("ok");
+            $(this).addClass("error");
             $("#saveRegister").attr("disabled", "disabled");
         }
         else {
-            $(this).css("border-color", "black");
-            $("#saveRegister").removeAttr("disabled ");
+            $(this).addClass("ok");
+            $(this).removeClass("error");
+            $("#saveRegister").removeAttr("disabled");
         }
     })
 
-    function Validation() {
+    $("#fio").on("input", function () {
         if ($(this).val() == "") {
-            $(this).css("border-color", "red");
+            $(this).removeClass("ok");
+            $(this).addClass("error");
             $("#saveRegister").attr("disabled", "disabled");
         }
         else {
-            $(this).css("border-color", "black");
-            $("#saveRegister").removeAttr("disabled ");
+            $(this).addClass("ok");
+            $(this).removeClass("error");
+            $("#saveRegister").removeAttr("disabled");
         }
-    }
+    });
+
+    $("#email").on("input", function () {
+        if ($(this).val() == "") {
+            $(this).removeClass("ok");
+            $(this).addClass("error");
+            $("#saveRegister").attr("disabled", "disabled");
+        }
+        else {
+            $(this).addClass("ok");
+            $(this).removeClass("error");
+            $("#saveRegister").removeAttr("disabled");
+        }
+    })
+
+    $(".password").on("input", function () {
+        console.log($(this));
+        if ($(this).val() == "") {
+            $(this).removeClass("ok");
+            $(this).addClass("error");
+            $("#saveRegister").attr("disabled", "disabled");
+        }
+        else {
+            $(this).addClass("ok");
+            $(this).removeClass("error");
+            $("#saveRegister").removeAttr("disabled");
+        }
+    })
 
     $("#saveRegister").click(function (e) {
         e.preventDefault();
 
-        if ($("#fio").val() != "" && $("#email").val() != "" && $("#nickEdit").val() != "" && $("#Password") != "")
+        if ($("#fio").val() != "" && $("#email").val() != "" && $("#nickEdit").val() != "" && $("#Password").val() != "")
         {
-            var json = { FIO: $("#fio").val(), Email: $("#email").val(), Nick: $("#nickEdit").val(), Password: $("#Password").val(), CityId: $("#cityList").children()[$("#cityList")[0].selectedIndex].value, RoleId: $("#roleList").children()[$("#roleList")[0].selectedIndex].value }
+            var json = { FIO: $("#fio").val(), Email: $("#email").val(), Nick: $("#nickEdit").val(), Password: $("#Password").val(), CityId: $("#cityList").children()[$("#cityList")[0].selectedIndex].value, RoleId: 0, Blocked: false, Deleted: false }
 
             $.ajax({
                 url: '/Home/Register',
@@ -167,7 +212,9 @@
                 datatype: 'json',
                 contentType: 'application/json; charset=utf-8',
                 data: JSON.stringify(json),
-                success: function (data) { }
+                success: function (data) {
+                    $("body").html(data);
+                }
             })
         }
         else {

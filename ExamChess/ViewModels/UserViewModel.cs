@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Web;
 
@@ -14,5 +15,7 @@ namespace ExamChess.ViewModels
         public string Password { get; set; }
         public int CityId { get; set; }
         public int RoleId { get; set; }
+        public bool Blocked { get; set; }
+        public bool Deleted { get; set; }
     }
 }

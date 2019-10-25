@@ -36,6 +36,10 @@ namespace DataLayer.Entities
 
         public int RoleId { get; set; }
 
+        public bool Blocked { get; set; }
+
+        public bool Deleted { get; set; }
+
         public virtual Cities Cities { get; set; }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]

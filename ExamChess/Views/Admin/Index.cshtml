@@ -1,0 +1,55 @@
+﻿<div id="adminIndex">
+    @{
+        ViewBag.Title = "Index";
+        List<ExamChess.ViewModels.CityViewModel> cities = (List<ExamChess.ViewModels.CityViewModel>)ViewBag.Cities;
+        List<ExamChess.ViewModels.CountryViewModel> countries = (List<ExamChess.ViewModels.CountryViewModel>)ViewBag.Countries;
+        List<ExamChess.ViewModels.RoleViewModel> roles = (List<ExamChess.ViewModels.RoleViewModel>)ViewBag.Roles;
+    }
+
+    <h2>@ViewBag.AdminName</h2>
+
+    <div>
+        <button type="button" class="createUser btn btn-primary">Create user</button>
+    </div>
+
+    <div id="createOrEditUser">
+        @Html.Partial("Partial/CreateOrEditPartialView", new ExamChess.ViewModels.UserViewModel())
+    </div>
+
+    <div id="list">
+        @Html.Partial("Partial/UserPartialView", ViewBag.Users as List<ExamChess.ViewModels.UserViewModel>, new ViewDataDictionary { { "cities", cities }, { "countries", countries }, { "roles", roles } })
+    </div>
+
+    @*<div id="games">
+        @Html.Partial("Partial/GamesPartialView", new ExamChess.ViewModels.UserViewModel())
+    </div>*@
+</div>
+
+<script type="text/javascript">
+
+    $(".createUser").click(() => {
+            $.ajax({
+                url: '@Url.Action("CreateOrEdit")',
+                method: 'GET',
+                data: { id: 0 },
+                success: function (data) {
+                    $("#createOrEditUser").html(data);
+                    jQuery.noConflict();
+                    $("#modalEdit").modal("show");
+                }
+            })
+    })
+
+    function EditButton(idItem) {
+            $.ajax({
+                url: '@Url.Action("CreateOrEdit")',
+                method: 'GET',
+                data: { id: idItem },
+                success: function (data) {
+                    $("#createOrEditUser").html(data);
+                    jQuery.noConflict();
+                    $("#modalEdit").modal("show");
+                }
+            })
+    }
+</script>
